@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registro de CLIENTES</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding-top>
+  <form #form="ngForm" [formGroup]="clienteForm" (ngSubmit)="submit()">
+    <div>
+      <ng-container *ngFor="let validation of validationMessages.nome">
+        <div *ngIf="clienteForm.get('nome')?.hasError(validation.type)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+      <ng-container *ngFor="let validation of validationMessages.renda">
+        <div *ngIf="clienteForm.get('renda')?.hasError(validation.type)">
+          {{validation.message}} 
+        </div> 
+      </ng-container>
+      <ng-container *ngFor="let validation of validationMessages.email">
+        <div *ngIf="clienteForm.get('email')?.hasError(validation.type)">
+          {{validation.message}} 
+        </div>
+      </ng-container>
+      <ng-container *ngFor="let validation of validationMessages.tel">
+        <div *ngIf="clienteForm.get('tel')?.hasError(validation.type)">
+          {{validation.message}} 
+        </div> 
+      </ng-container>
+      <ng-container *ngFor="let validation of validationMessages.nascimento">
+        <div *ngIf="clienteForm.get('nascimento')?.hasError(validation.type)">
+          {{validation.message}} 
+        </div> 
+      </ng-container>
+    </div>
+    <!-- <ion-list class="errors-summary" *ngIf="hasErrors">
+      <ion-label class="errors-summary" *ngFor="let errorMessage of errorMessage">
+        {{ errorMessage }}<br/>
+      </ion-label>
+    </ion-list>-->
+    <ion-item no-padding>
+    <ion-label position="floating">Nome</ion-label>
+    <ion-input formControlName="nome" type="text" [class.invalid]="!clienteForm.controls['nome'].valid && clienteForm.controls['nome'].touched"></ion-input>
+    <!--<small class="error-message" *ngIf="(clienteForm.get('nome')?.errors?.['required'] || clienteForm.get('nome')?.errors?.['minlength'] || clienteForm.get('nome')?.errors?.['maxlength']) && (form.submitted || clienteForm.get('nome')?.touched)">
+      Informe o nome (3 a 50 caracteres)
+    </small>-->
+  </ion-item>
+  <ion-item no-padding>
+    <ion-label position="floating">E-mail</ion-label>
+    <ion-input formControlName="email"  type="email" [class.invalid]="!clienteForm.controls['email'].valid && clienteForm.controls['email'].touched"></ion-input>  
+    <!--<small class="error-message" *ngIf="(clienteForm.get('email')?.errors?.['required'] || clienteForm.get('email')?.errors?.['email']) && (form.submitted || clienteForm.get('email')?.touched)">
+      Informe um e-mail válido
+    </small>-->
+  </ion-item>
+
+  <ion-item no-padding>
+    <ion-label position="floating">Telefone</ion-label>
+    <ion-input formControlName="tel" type="tel" [class.invalid]="!clienteForm.controls['tel'].valid && clienteForm.controls['tel'].touched"></ion-input>  
+    <!--<small class="error-message" *ngIf="clienteForm.get('tel')?.errors?.['required'] && (form.submitted || clienteForm.get('tel')?.touched)">
+      Informe o telefone
+    </small>-->
+  </ion-item>
+  <ion-item no-padding>
+    <ion-label position="floating">Renda</ion-label>
+    <ion-input formControlName="renda" type="number" [class.invalid]="!clienteForm.controls['renda'].valid && clienteForm.controls['renda'].touched"></ion-input>  
+    <!--<small class="error-message" *ngIf="(clienteForm.get('renda')?.errors?.['required'] || clienteForm.get('renda')?.errors?.['min']) && (form.submitted || clienteForm.get('renda')?.touched)">
+      Informe uma renda positiva
+    </small>-->
+  </ion-item>
+  <ion-item no-padding>
+    <ion-label position="floating">Data de Nascimento</ion-label>
+    <ion-input formControlName="nascimento" type="text" [class.invalid]="!clienteForm.controls['nascimento'].valid && clienteForm.controls['nascimento'].touched"></ion-input>
+    <!--<small class="error-message" *ngIf="clienteForm.get('nascimento')?.errors?.['required'] && (form.submitted || clienteForm.get('nascimento')?.touched)">
+      Informe uma data de nascimento
+    </small>-->
+  </ion-item> 
+  <ion-button shape="round" color="primary" expand="block" padding
+  type="submit">
+    Confirmar
+  </ion-button>
+</form>
+</ion-content>

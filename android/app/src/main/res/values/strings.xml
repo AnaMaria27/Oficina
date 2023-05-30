@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">oficina</string>
+    <string name="title_activity_main">oficina</string>
+    <string name="package_name">ionic.oficina</string>
+    <string name="custom_url_scheme">ionic.oficina</string>
+</resources>

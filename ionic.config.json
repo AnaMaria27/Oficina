@@ -1,0 +1,7 @@
+{
+  "name": "oficina",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
