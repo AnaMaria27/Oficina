@@ -80,14 +80,14 @@
           </ion-grid>
         </div>
       </ion-item>
-      <ion-button type="submit" *ngIf="!modoDeEdicao" shape="round" color="primary" expand="block" padding (click)="alterarEdicao()">
+      <ion-button *ngIf="!modoDeEdicao" shape="round" color="primary" expand="block" padding (click)="iniciarEdicao()">
         Alterar dados
       </ion-button>
       <div *ngIf="modoDeEdicao" no-padding>
         <ion-grid>
           <ion-row>
             <ion-col col-6>
-              <ion-button shape="round" color="success" size="small" padding expand="block">
+              <ion-button type="submit" shape="round" color="success" size="small" padding expand="block">
                 Gravar
               </ion-button>
             </ion-col>

@@ -1,21 +1,44 @@
-import {Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { Injectable } from "@angular/core";
+import { AlertController } from "@ionic/angular";
+import { ADDRGETNETWORKPARAMS } from "dns";
 
-@Injectable({ 
-  providedIn: 'root'
+@Injectable({
+    providedIn: 'root'
 })
 
-export class AlertService {
-  constructor(
-  private alertCtrl: AlertController
-  ){}
-  async presentAlert(header: string, subHeader: string, message: string, buttons: string[]) { 
-    const alert = await this.alertCtrl.create({
-    header, 
-    subHeader,
-    message,
-    buttons
-    });
-    await alert.present();
-  }
+export class AlertService{
+
+    constructor(
+        private alertCtrl: AlertController
+    ){}
+
+    async presentAlert(header: string, subHeader: string, message: string, buttons: string[]){
+        const alert = await this.alertCtrl.create({
+            header,
+            subHeader,
+            message,
+            buttons
+        });
+        await alert.present();
+    }
+
+    async presentConfirm(header: string, message: string, successFunction: () => void){
+        const alert = await this.alertCtrl.create({
+            header,
+            message,
+            buttons: [{
+                text: 'Cancel', role: 'cancel',
+                handler: () => {
+                    console.log('Remoção cancelada');
+                }
+            },{
+                text: 'Manda brasa',
+                handler: () => {
+                    successFunction();
+                }
+            }]
+        });
+        await alert.present();
+    }
+
 }

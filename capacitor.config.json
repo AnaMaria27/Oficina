@@ -1,6 +1,6 @@
 {
   "server": {
-    "url": "http://10.10.5.199:8100",
+    "url": "http://localhost:8102",
     "originalUrl": "http://10.10.5.199:8100"
   }
 }

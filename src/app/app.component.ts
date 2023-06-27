@@ -28,6 +28,11 @@ export class AppComponent {
       title: 'Atendimentos',
       url: '/ordensdeservico-listagem',
       icon: '/assets/imgs/icon_atendimentos.png'
+    },
+    {
+      title: 'Clientes',
+      url: '/clientes-listagem',
+      icon: '/assets/imgs/icon_clientes.png'
     }
   ];
 
