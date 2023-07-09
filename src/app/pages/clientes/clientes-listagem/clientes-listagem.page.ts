@@ -29,8 +29,7 @@ export class ClientesListagemPage implements OnInit {
     this.clientes = await this.clientesService.getAll();
   }
 
-
-  /*async removerCliente(cliente: Cliente) {
+  async removerCliente(cliente: Cliente) {
     try {
       const successFunction = async () => {
         this.clientesService.removeById(cliente.clienteid);
@@ -42,8 +41,5 @@ export class ClientesListagemPage implements OnInit {
     } catch (e: any) {
       await this.alertService.presentAlert('Falha', 'Remoção não foi executada', e, ['Ok']);
     }
-  }*/
-
-
-
+  }
 }

@@ -58,7 +58,14 @@ export class ClientesService{
         await deleteDoc(doc(this._fireStore, "clientes", clienteId)); 
     }
 
-
+    async getByNome(nome: string): Promise<Cliente[]>{
+        const clientes: Cliente[] = await this.getAll();
+        if(!nome) {
+            return clientes;
+        }
+        return clientes.filter(
+            cliente => cliente.nome.toLowerCase().startsWith(nome.toLowerCase()));
+    }
 }
 
 /*import { DatabaseService } from "./database.services";

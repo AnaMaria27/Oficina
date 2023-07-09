@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrdemDeServico } from 'src/app/models/ordemdeservico.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Guid } from 'guid-typescript';
 import { Cliente } from 'src/app/models/cliente.model';
 import { ClientesService } from 'src/app/services/clientes.service';
 import { DatePicker } from '@ionic-native/date-picker/ngx';
@@ -20,6 +19,7 @@ export class OrdensDeServicoAddEditPage implements OnInit {
   public modoDeEdicao = false;
   public osForm!: FormGroup;
   public clientes: Cliente[] = [];
+  public nomeCliente = 'Pesquise o cliente';
   
   constructor(
     private formBuilder: FormBuilder,
@@ -34,6 +34,16 @@ export class OrdensDeServicoAddEditPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.ordemDeServico = {ordemdeservicoid: '', clienteid: '', veiculo: '', dataehoraentrada: new Date() };
+    this.osForm = this.formBuilder.group({
+      ordemdeservicoid: [this.ordemDeServico.ordemdeservicoid],
+      clienteid: [this.ordemDeServico.clienteid, Validators.required],
+      veiculo: [this.ordemDeServico.veiculo, Validators.required],
+      dataentrada: [{ value: this.ordemDeServico.dataehoraentrada.toLocaleDateString(), disabled: !this.modoDeEdicao}, Validators.required],
+      horaentrada: [{ value: this.ordemDeServico.dataehoraentrada.toLocaleTimeString(), disabled: !this.modoDeEdicao}, Validators.required],
+      dataehoraentrada: [this.ordemDeServico.dataehoraentrada]
+    });
+    this.modoDeEdicao = true;
   }
 
   /*async ionViewWillEnter() {
@@ -129,7 +139,7 @@ export class OrdensDeServicoAddEditPage implements OnInit {
   }
 
     // Método a ser invocado quando o botão de gravar for selecionado
-    async submit() {
+  /*  async submit() {
       // Validação dos dados informados no formulário. Já trabalhamos com isso.
       if (this.osForm.invalid || this.osForm.pending) {
         await this.alertService.presentAlert('Falha', 'Gravação não foi executada', 'Verifique os dados informados para o atendimento', ['Ok']);
@@ -151,6 +161,6 @@ export class OrdensDeServicoAddEditPage implements OnInit {
       // Informamos o usuário do sucesso da operação e o redirecionamos para a listagem
       this.toastService.presentToast('Gravação bem sucedida', 3000, 'top');
       this.router.navigateByUrl('ordensdeservico-listagem');
-    }
+    }*/
 
 }
