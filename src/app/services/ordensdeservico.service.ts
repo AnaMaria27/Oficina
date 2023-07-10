@@ -12,6 +12,8 @@ import { collection, Firestore, getDocs, orderBy, query } from "firebase/firesto
 
 export class OrdensDeServicoService {
 
+
+
     constructor(
         private databaseService: DatabaseService,
         private _fireStore: Firestore,
@@ -50,27 +52,6 @@ export class OrdensDeServicoService {
         }
     }
 
-    async update(ordemdeservico: OrdemDeServico): Promise<void> {
-        let sql: any;
-        let params: any;
-        if (Guid.parse(ordemdeservico.ordemdeservicoid).isEmpty()) {
-            ordemdeservico.ordemdeservicoid = Guid.create().toString();
-            sql = 'INSERT INTO ordensdeservico(ordemdeservicoid, clienteid, veiculo, dataehoraentrada) ' + 'values(?, ?, ?, ?)';
-            params = [ordemdeservico.ordemdeservicoid, ordemdeservico.clienteid, ordemdeservico.veiculo, ordemdeservico.dataehoraentrada];
-        } else {
-            sql = 'UPDATE ordensdeservico SET clienteid = ?, veiculo = ?, ' + 'dataehoraentrada = ? WHERE ordemdeservicoid = ?';
-            params = [ordemdeservico.clienteid, ordemdeservico.veiculo, ordemdeservico.dataehoraentrada, ordemdeservico.ordemdeservicoid];
-        }
-        try {
-            const db = await this.databaseService.sqliteConnection.retrieveConnection(databaseName, false);
-            db.open();
-            await db.run(sql, params);
-            db.close();
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
     async removeById(id: string): Promise<boolean | void> {
         try{
             const db = await this.databaseService.sqliteConnection.retrieveConnection(databaseName, false);
@@ -82,7 +63,32 @@ export class OrdensDeServicoService {
             console.error(e);
         }
     }
-
+    async update(ordemDeServico: OrdemDeServico) {
+        ordemDeServico.dataehoraentrada= new Date(ordemDeServico.dataehoraentrada); 
+        const clientesRef = collection(this._fireStore, "ordensdeservico");
+        if (ordemDeServico.ordemdeservicoid.length == 0) { 
+            await setDoc(doc(clientesRef).withConverter(ordemDeServicoConverter), ordemDeServico);
+        } else {
+            await setDoc(doc(this._fireStore, "ordensdeservico", ordemDeServico. ordemdeservicoid).withConverter (ordemDeServicoConverter), ordemDeServico);
+        }
+    }
  
+    async submit() {
+        if (this.osForm.invalid || this.osForm.pending) { 
+            await this.alertService.presentAlert('Falha', 'Gravação não foi executade', 'Verifique os dados informados para o atendimento', ['Ok']);
+            return;
+        }
+        const loading = await this.loadingCtrl.create();
+        await loading.present();
+        const data= new Date(this.osForm.controls['dataentrada'].value).toISOString();
+        const hora = new Date(this.osForm.controls['horaentrada'].value).toISOString();
+        this.osForm.controls! ['dataehoraentrada'].setValue( 
+            data.substring(8, 11)+ hora.substring(11, 22)
+        ):
+        await this.ordensDeServicoService.update(this.osForm.value);
+        loading.dismiss().then(() =>{
+        this.toastService.presentToast('Gravação bem sucedida', 3680, 'top'); 
+        this.router.navigateByUrl('ordensdeservico-listagem');
+        });
+        }
 
-}

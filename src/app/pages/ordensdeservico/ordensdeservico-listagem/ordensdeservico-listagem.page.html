@@ -29,6 +29,7 @@
   <ion-fab vertical="top" horizontal="end" slot="fixed" edge="true">
     <ion-fab-button routerDirection="forward" [routerLink]="['/ordensdeservico-add-edit/-1']">
       <ion-icon name="add"></ion-icon>
+      <ion-back-button defaultHref="ordensdeservico-listagem" (click)="unsubscribeServices ()"></ion-back-button>
     </ion-fab-button>
   </ion-fab>
 </ion-content>
